@@ -7,7 +7,7 @@ import (
 	"log"
 	"net/http"
 
-	pb "github.com/M-Mongy/Distributed-System_Project/GRPC_Server"
+	inv "github.com/M-Mongy/Distributed-System_Project/GRPC_Server/Invoicer"
 
 	"google.golang.org/grpc"
 )
@@ -21,13 +21,13 @@ var db *sql.DB
 
 func main() {
 	// اتصال بـ gRPC Service
-	conn, err := grpc.Dial("localhost:50051", grpc.WithInsecure())
+	conn, err := grpc.Dial("localhost:8089", grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Failed to connect to gRPC: %v", err)
 	}
 	defer conn.Close()
 
-	client := pb.UserServiceClient(conn)
+	client := inv.NewInvoicerClient(conn)
 
 	http.HandleFunc("/user", func(w http.ResponseWriter, r *http.Request) {
 		CreateUserHandler(w, r, client)
@@ -37,7 +37,7 @@ func main() {
 	http.ListenAndServe(":8080", nil)
 }
 
-func CreateUserHandler(w http.ResponseWriter, r *http.Request, client pb.UserServiceClient) {
+func CreateUserHandler(w http.ResponseWriter, r *http.Request, client inv.InvoicerClient) {
 	if r.Method != http.MethodPost {
 		w.WriteHeader(http.StatusMethodNotAllowed)
 		return
@@ -49,17 +49,17 @@ func CreateUserHandler(w http.ResponseWriter, r *http.Request, client pb.UserSer
 		return
 	}
 
-	// 👈 هنا بنادي gRPC Service
-	resp, err := client.CreateUser(context.Background(), &pb.UserRequest{
-		Name:  u.Name,
-		Email: u.Email,
+	resp, err := client.Create(context.Background(), &inv.CreateRequest{
+		Amount:    &inv.Amount{Amount: 0, Currency: ""},
+		From:      u.Name,
+		To:        u.Email,
+		VATnumber: "",
 	})
 	if err != nil {
 		http.Error(w, "gRPC call failed", http.StatusInternalServerError)
 		return
 	}
 
-	// رجّع الـ response اللي جه من gRPC
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(resp)
 }

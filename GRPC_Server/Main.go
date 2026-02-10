@@ -5,7 +5,7 @@ import (
 	"log"
 	"net"
 
-	invoicer "github.com/M_Mongy/Distributed-System_Project/GRPC_Server/Invoicer"
+	invoicer "github.com/M-Mongy/Distributed-System_Project/GRPC_Server/Invoicer"
 	"google.golang.org/grpc"
 )
 

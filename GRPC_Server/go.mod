@@ -1,4 +1,4 @@
-module github.com/M-Mongy/Distributed-System_Project
+module github.com/M-Mongy/Distributed-System_Project/GRPC_Server
 
 go 1.25.6
 
