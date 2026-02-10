@@ -1,4 +1,4 @@
-module github.com/MohamedMongy917/Distributed-System_Project
+module github.com/M-Mongy/Distributed-System_Project
 
 go 1.25.6
 

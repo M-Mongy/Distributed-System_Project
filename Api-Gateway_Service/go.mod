@@ -1,4 +1,4 @@
-module distributed-system/api-gateway
+module github.com/M-Mongy/Distributed-System_Project/Api-Gateway_Service
 
 go 1.25.6
 

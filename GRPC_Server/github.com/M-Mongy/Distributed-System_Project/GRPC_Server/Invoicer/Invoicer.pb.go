@@ -78,6 +78,7 @@ type CreateRequest struct {
 	Amount        *Amount                `protobuf:"bytes,1,opt,name=amount,proto3" json:"amount,omitempty"`
 	From          string                 `protobuf:"bytes,2,opt,name=from,proto3" json:"from,omitempty"`
 	To            string                 `protobuf:"bytes,3,opt,name=to,proto3" json:"to,omitempty"`
+	VATnumber     string                 `protobuf:"bytes,4,opt,name=VATnumber,proto3" json:"VATnumber,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -129,6 +130,13 @@ func (x *CreateRequest) GetFrom() string {
 func (x *CreateRequest) GetTo() string {
 	if x != nil {
 		return x.To
+	}
+	return ""
+}
+
+func (x *CreateRequest) GetVATnumber() string {
+	if x != nil {
+		return x.VATnumber
 	}
 	return ""
 }
@@ -192,16 +200,17 @@ const file_Invoicer_proto_rawDesc = "" +
 	"\x0eInvoicer.proto\"<\n" +
 	"\x06Amount\x12\x16\n" +
 	"\x06amount\x18\x01 \x01(\x03R\x06amount\x12\x1a\n" +
-	"\bcurrency\x18\x02 \x01(\tR\bcurrency\"T\n" +
+	"\bcurrency\x18\x02 \x01(\tR\bcurrency\"r\n" +
 	"\rCreateRequest\x12\x1f\n" +
 	"\x06amount\x18\x01 \x01(\v2\a.AmountR\x06amount\x12\x12\n" +
 	"\x04from\x18\x02 \x01(\tR\x04from\x12\x0e\n" +
-	"\x02to\x18\x03 \x01(\tR\x02to\"6\n" +
+	"\x02to\x18\x03 \x01(\tR\x02to\x12\x1c\n" +
+	"\tVATnumber\x18\x04 \x01(\tR\tVATnumber\"6\n" +
 	"\x0eCreateResponse\x12\x10\n" +
 	"\x03pdf\x18\x01 \x01(\fR\x03pdf\x12\x12\n" +
 	"\x04docx\x18\x02 \x01(\fR\x04docx25\n" +
 	"\bInvoicer\x12)\n" +
-	"\x06Create\x12\x0e.CreateRequest\x1a\x0f.CreateResponseBUZSgithub.com/MohamedMongy917/Distributed-System_Project/GRPC_Server/Invoicer;invoicerb\x06proto3"
+	"\x06Create\x12\x0e.CreateRequest\x1a\x0f.CreateResponseBMZKgithub.com/M-Mongy/Distributed-System_Project/GRPC_Server/Invoicer;invoicerb\x06proto3"
 
 var (
 	file_Invoicer_proto_rawDescOnce sync.Once

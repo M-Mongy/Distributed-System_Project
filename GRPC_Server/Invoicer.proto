@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option go_package = "github.com/MohamedMongy917/Distributed-System_Project/GRPC_Server/Invoicer;invoicer";
+option go_package = "github.com/M-Mongy/Distributed-System_Project/GRPC_Server/Invoicer;invoicer";
 
 message Amount {
   int64 amount = 1;
