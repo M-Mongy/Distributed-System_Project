@@ -3,6 +3,7 @@ module github.com/M-Mongy/Distributed-System_Project/GRPC_Server
 go 1.25.6
 
 require (
+	github.com/lib/pq v1.11.2
 	google.golang.org/grpc v1.78.0
 	google.golang.org/protobuf v1.36.11
 )

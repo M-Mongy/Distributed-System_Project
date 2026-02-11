@@ -20,7 +20,6 @@ type user struct {
 var db *sql.DB
 
 func main() {
-	// اتصال بـ gRPC Service
 	conn, err := grpc.Dial("localhost:8089", grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Failed to connect to gRPC: %v", err)
