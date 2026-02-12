@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"database/sql"
+	//"database/sql"
 	"encoding/json"
 	"log"
 	"net/http"
@@ -17,7 +17,7 @@ type user struct {
 	Email string `json:"email"`
 }
 
-var db *sql.DB
+//var db *sql.DB
 
 func main() {
 	conn, err := grpc.Dial("localhost:8089", grpc.WithInsecure())

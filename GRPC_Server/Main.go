@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"database/sql"
+	"fmt"
 	"log"
 	"net"
 
@@ -19,12 +20,32 @@ type myinvoicerServer struct {
 
 // Create handles CreateRequest and inserts a new user into the Postgres DB
 func (s *myinvoicerServer) Create(ctx context.Context, req *invoicer.CreateRequest) (*invoicer.CreateResponse, error) {
-	_, err := s.db.Exec(
+	tx, err := s.db.Begin()
+	if err != nil {
+		return nil, err
+	}
+
+	_, err = tx.Exec(
 		"INSERT INTO users(name, email) VALUES($1, $2)",
-		req.From, // From = Name
-		req.To,   // To = Email
+		req.From,
+		req.To,
 	)
 	if err != nil {
+		tx.Rollback()
+		return nil, err
+	}
+
+	_, err = tx.Exec(
+		"INSERT INTO outbox_events(event_type, payload) VALUES($1, $2)",
+		"user.created",
+		fmt.Sprintf(`{"name":"%s","email":"%s"}`, req.From, req.To),
+	)
+	if err != nil {
+		tx.Rollback()
+		return nil, err
+	}
+
+	if err := tx.Commit(); err != nil {
 		return nil, err
 	}
 
